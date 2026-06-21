@@ -6,6 +6,9 @@ state so the install can be verified.
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import typer
 
 from ytdrivebook import __version__
@@ -25,9 +28,21 @@ def info() -> None:
 
 
 @app.command()
-def ingest(ref: str) -> None:
-    """Extract + structure a video/playlist/channel. (Phase 1-2)"""
-    raise typer.Exit(typer.echo("ingest: implemented in Phase 1-2"))
+def ingest(ref: str, window: float = 90.0, out: str = "") -> None:
+    """Extract raw segments from a YouTube video (transcript + metadata)."""
+    from ytdrivebook.extract.youtube import YouTubeIngester
+
+    segments = list(YouTubeIngester(window_seconds=window).extract(ref))
+    title = segments[0].source.title or ref
+    typer.echo(f"extracted {len(segments)} segments from: {title}")
+    if out:
+        path = Path(out)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps([s.model_dump() for s in segments], indent=2, ensure_ascii=False),
+            encoding="utf-8",
+        )
+        typer.echo(f"saved -> {path}")
 
 
 @app.command()

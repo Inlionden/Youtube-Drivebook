@@ -15,13 +15,16 @@ Tasks, Dependencies, Acceptance Criteria.
 - **Acceptance:** `pytest tests/test_hyperlattice.py` passes; PPR reproduces the
   worked numeric example (multi-hop surfaces an unseeded concept).
 
-## Phase 1 — YouTube Extract (single video)
+## Phase 1 — YouTube Extract (single video)  ◐ core done
 - **Goal:** Real transcript + metadata + key frames into `RawSegment`s.
-- **Deliverables:** `extract/youtube.py` implementing `Ingester`.
-- **Tasks:** transcript (youtube-transcript-api); metadata/chapters/comments (yt-dlp);
-  key frames (opencv scene-change); cache to `data/raw/`.
+- **Deliverables:** `extract/youtube.py` implementing `Ingester`; `drivebook ingest` CLI.
+- **Done:** transcript+timestamps (youtube-transcript-api v1.x), title/channel via
+  oEmbed, windowed segmentation, CLI that saves RawSegments to JSON. Verified live
+  on a real video (16 tests pass; offline via injected fetchers).
+- **Deferred (needs yt-dlp / video download):** creator chapters, playlist/channel
+  expansion, key-frame sampling (opencv), comments.
 - **Dependencies:** Phase 0 schemas.
-- **Acceptance:** one video → list of `RawSegment`s with timestamps + ≥1 frame; cached.
+- **Acceptance:** one video → list of `RawSegment`s with timestamps. ✅ (frames pending)
 
 ## Phase 2 — Transform to ContentUnits  ✅
 - **Goal:** Groq turns segments into validated `ContentUnit`s.
