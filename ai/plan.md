@@ -23,7 +23,7 @@ Tasks, Dependencies, Acceptance Criteria.
 - **Dependencies:** Phase 0 schemas.
 - **Acceptance:** one video → list of `RawSegment`s with timestamps + ≥1 frame; cached.
 
-## Phase 2 — Transform to ContentUnits
+## Phase 2 — Transform to ContentUnits  ✅
 - **Goal:** Groq turns segments into validated `ContentUnit`s.
 - **Deliverables:** `transform/llm_client.py` (Groq, JSON mode), `transform/structurer.py`.
 - **Tasks:** prompt + schema-constrained output; segment→unit mapping; retry/validate.
@@ -31,7 +31,7 @@ Tasks, Dependencies, Acceptance Criteria.
 - **Acceptance:** segments → `ContentUnit`s passing Pydantic validation; offline test
   with a stubbed LLM client.
 
-## Phase 3 — First Exporter (Markdown book)
+## Phase 3 — First Exporter (Markdown book)  ✅
 - **Goal:** Visible artifact end to end for one video.
 - **Deliverables:** `load/exporters.py:MarkdownBookExporter`.
 - **Tasks:** render chapters, key points, embedded frames, source citations.
